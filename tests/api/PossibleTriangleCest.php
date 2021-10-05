@@ -6,27 +6,26 @@ namespace Api;
 
 use Codeception\Example;
 use Codeception\Util\HttpCode;
-use Step\TriangleTester;
 
 class PossibleTriangleCest
 {
+    public const URL = '/triangle';
+
     /**
-     * @param TriangleTester $I
+     * @param \ApiTester $I
      * @param Example $provider
      *
      * @dataProvider triangleDataProvider
      */
-
-
-    public function isPossibleGetTriangleData(TriangleTester $I, Example $provider): void
+    public function isPossibleGetTriangleData(\ApiTester $I, Example $provider): void
     {
-        $I->isPossible($provider['params']);
+        $I->sendGet(self::URL . '/possible', $provider['params']);
         $I->seeResponseContainsJson($provider['expectedArray']); //надо тринглтестер переместить сюда, ибо тут не понятно что он делает метод
         $I->seeResponseCodeIs($provider['expectedCode']);
     }
-    public function isPossibleShouldFailWhenNotGetMethod(TriangleTester $I): void
+    public function isPossibleShouldFailWhenNotGetMethod(\ApiTester $I): void
     {
-        $I->sendPost(TriangleTester::URL . '/possible', ['a' => 10, 'b' => 9, 'c' => 9]);
+        $I->sendPost(self::URL . '/possible', ['a' => 10, 'b' => 9, 'c' => 9]); //проверка на 405 ответ
         $I->seeResponseCodeIs(HttpCode::METHOD_NOT_ALLOWED);
     }
 
