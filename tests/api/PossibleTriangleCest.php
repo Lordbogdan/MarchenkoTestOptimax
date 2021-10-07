@@ -11,6 +11,7 @@ class PossibleTriangleCest
 {
     public const URL = '/triangle';
 
+    //Получем на вход параметры и код ответа
     /**
      * @param \ApiTester $I
      * @param Example $provider
@@ -20,20 +21,21 @@ class PossibleTriangleCest
     public function isPossibleGetTriangleData(\ApiTester $I, Example $provider): void
     {
         $I->sendGet(self::URL . '/possible', $provider['params']);
-        $I->seeResponseContainsJson($provider['expectedArray']); //надо тринглтестер переместить сюда, ибо тут не понятно что он делает метод
+        $I->seeResponseContainsJson($provider['expectedArray']);
         $I->seeResponseCodeIs($provider['expectedCode']);
     }
-    public function isPossibleShouldFailWhenNotGetMethod(\ApiTester $I): void
+    //Проверяем ответ сервера на Post запрос
+    public function ShouldFailWhenNotGetMethod(\ApiTester $I): void
     {
-        $I->sendPost(self::URL . '/possible', ['a' => 10, 'b' => 9, 'c' => 9]); //проверка на 405 ответ
+        $I->sendPost(self::URL . '/possible', ['a' => 10, 'b' => 9, 'c' => 9]); //
         $I->seeResponseCodeIs(HttpCode::METHOD_NOT_ALLOWED);
     }
-
+//Шаги проверки Треугольника
     protected function triangleDataProvider(): array
     {
         return [
             [
-                'params' => [
+            'params' => [
                     'a' => 0,
                     'b' => 2,
                     'c' => 3
