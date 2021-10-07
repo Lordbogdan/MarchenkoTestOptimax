@@ -27,10 +27,10 @@ class PossibleTriangleCest
     //Проверяем ответ сервера на Post запрос
     public function ShouldFailWhenNotGetMethod(\ApiTester $I): void
     {
-        $I->sendPost(self::URL . '/possible', ['a' => 10, 'b' => 9, 'c' => 9]); //
+        $I->sendPost(self::URL . '/possible', ['a' => 10, 'b' => 9, 'c' => 9]);
         $I->seeResponseCodeIs(HttpCode::METHOD_NOT_ALLOWED);
     }
-//Шаги проверки Треугольника
+    //Шаги проверки Треугольника
     protected function triangleDataProvider(): array
     {
         return [
